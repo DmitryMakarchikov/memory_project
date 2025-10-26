@@ -630,7 +630,108 @@
         }
 
         /* Карта памяти - старинная карта */
-        #map-container {
+        /* === Карта и инфо-блок === */
+#map-section { padding-top: 120px; padding-bottom: 120px; }
+#map-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    max-width: 1400px;
+}
+
+#map-container {
+    width: 820px;
+    height: 650px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 4px solid #5a4634;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+    background: #d4c4b4;
+    position: relative;
+}
+
+/* Inline SVG fills the container */
+#map-container svg { width:100%; height:100%; display:block; }
+
+/* Стили для регионов */
+.region-interactive{
+    transition:all 0.3s ease !important;
+    cursor:pointer !important;
+}
+
+.region-interactive:hover{
+    filter:brightness(1.2) !important;
+}
+
+.region-active {
+    fill:#f4c574 !important;
+    stroke:#8b6f47 !important;
+    stroke-width:3 !important;
+    filter:drop-shadow(0 0 20px rgba(244,197,116,0.9)) brightness(1.35) !important;
+    animation:pulse 2s ease-in-out infinite !important;
+}
+
+.region-active *{
+    fill:#f4c574 !important;
+    stroke:#8b6f47 !important;
+}
+
+@keyframes pulse{
+    0%,100%{filter:drop-shadow(0 0 20px rgba(244,197,116,0.9)) brightness(1.35)}
+    50%{filter:drop-shadow(0 0 30px rgba(244,197,116,1)) brightness(1.45)}
+}
+
+#info-box{flex:1 1 420px;max-width:480px;min-height:420px;border-radius:10px;background:rgba(90,70,52,0.45);border:3px solid #5a4634;color:#e8d5b7;padding:26px;box-shadow:0 15px 50px rgba(0,0,0,0.8);font-size:18px;line-height:1.65;text-shadow:2px 2px 6px rgba(0,0,0,0.8);overflow-y:auto}
+#info-box .title{font-size:24px;color:#f4c574;margin-bottom:10px;font-weight:bold;text-shadow:2px 2px 8px rgba(0,0,0,0.9)}
+#info-box .image{width:100%;height:200px;background-size:cover;background-position:center;border-radius:8px;margin-bottom:16px;border:2px solid #5a4634;box-shadow:0 4px 12px rgba(0,0,0,0.6)}
+#info-box .content{font-size:17px}
+#info-box .content p{margin-bottom:14px}
+#info-box .content strong{color:#d4a574}
+@media(max-width:1000px){#map-container{width:100%;height:540px}#map-wrapper{flex-direction:column;align-items:center}#info-box{max-width:100%}}
+
+
+/* Информационный блок справа */
+#info-box {
+    flex: 1 1 420px;
+    max-width: 480px;
+    min-height: 420px;
+    border-radius: 10px;
+    background: rgba(90,70,52,0.45);
+    border: 3px solid #5a4634;
+    color: #e8d5b7;
+    padding: 26px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+    font-size: 18px;
+    line-height: 1.65;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+    overflow-y: auto;
+}
+
+#info-box .title {
+    font-size: 22px;
+    color: #d4a574;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+#info-box .image {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 2px solid #5a4634;
+}
+
+@media (max-width: 1000px) {
+    #map-container { width: 100%; height: 540px; }
+    #map-wrapper { flex-direction: column; align-items:center; padding: 20px; }
+    #info-box { max-width: 100%; }
+}#map-container {
             height: 650px;
             border-radius: 10px;
             overflow: hidden;
@@ -1632,41 +1733,42 @@
     </section>
 
     <!-- Карта памяти -->
-    <section id="map" class="section">
-        <h1 class="section-title">
-            <span class="nav-ru">Карта памяти</span>
-            <span class="nav-by" style="display:none;">Карта памяці</span>
-        </h1>
-        <div id="map-container"></div>
-        
-        <div class="map-legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background: #dc143c;"></div>
-                <span class="nav-ru">🟥 Битвы и военные операции</span>
-                <span class="nav-by" style="display:none;">🟥 Бітвы і ваенныя аперацыі</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #228b22;"></div>
-                <span class="nav-ru">🟩 Партизанские базы</span>
-                <span class="nav-by" style="display:none;">🟩 Партызанскія базы</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #4169e1;"></div>
-                <span class="nav-ru">🟦 Места массовых жертв</span>
-                <span class="nav-by" style="display:none;">🟦 Месцы масавых ахвяр</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #ffd700;"></div>
-                <span class="nav-ru">🟨 Освобождение городов</span>
-                <span class="nav-by" style="display:none;">🟨 Вызваленне гарадоў</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #dcdcdc;"></div>
-                <span class="nav-ru">⚪ Мемориалы памяти</span>
-                <span class="nav-by" style="display:none;">⚪ Мемарыялы памяці</span>
+<section id="map" class="section">
+    <h1 class="section-title">
+        <span class="nav-ru">Карта памяти</span>
+        <span class="nav-by" style="display:none;">Карта памяці</span>
+    </h1>
+
+    <div id="map-wrapper" style="display:flex; flex-wrap:nowrap; justify-content:center; align-items:flex-start; gap:30px; max-width:1150px; margin:0 auto;">
+
+        <!-- Карта слева -->
+        <div id="map-container" style="flex:0 0 700px; height:520px; border-radius:10px; overflow:hidden; border:3px solid #5a4634; box-shadow:0 10px 30px rgba(0,0,0,0.8); background:#d4c4b4; position:relative;">
+            <div class="default-message" style="padding:40px; text-align:center; color:#5a4634; font-style:italic; display:flex; align-items:center; justify-content:center; height:100%;">
+                Карта загружается…
             </div>
         </div>
-    </section>
+
+        <!-- Инфо-блок справа -->
+        <div id="info-box" style="flex:0 0 700px; height:520px; border-radius:10px; background:rgba(90,70,52,0.45); border:3px solid #5a4634; color:#e8d5b7; padding:26px; box-shadow:0 10px 30px rgba(0,0,0,0.8); font-size:17px; line-height:1.6; text-shadow:2px 2px 6px rgba(0,0,0,0.8); overflow-y:auto; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+
+            <!-- Начальное сообщение по центру -->
+            <div class="default-message" id="initial-message" style="flex:1; display:flex; align-items:center; justify-content:center; text-align:center; width:100%;">
+                Выберите область на карте, чтобы увидеть историческую информацию о событиях Великой Отечественной войны
+            </div>
+
+            <!-- Контент области (скрыт пока не выбран регион) -->
+            <div class="region-content" style="display:none; width:100%;">
+                <!-- Название -->
+                <div class="title" style="font-size:22px; color:#d4a574; font-weight:bold; margin-bottom:10px; text-align:center;"></div>
+                <!-- Изображение -->
+                <div class="image" style="width:100%; height:200px; background-size:cover; background-position:center; border-radius:8px; margin-bottom:12px; border:2px solid #5a4634;"></div>
+                <!-- Текст -->
+                <div class="content" style="font-size:17px; line-height:1.6; text-align:left;"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
     <!-- Голоса Победы -->
     <head>
@@ -4679,70 +4781,180 @@ document.addEventListener('DOMContentLoaded', () => {
         // Показать исходные истории сразу при загрузке
         displayMemories();
 
-        // Инициализация карты
-        let map;
-        function initMap() {
-            if (window.mapInitialized) return;
-            
-            map = L.map('map-container').setView([53.9, 27.56], 7);
-            
-            // Старинный стиль карты
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: '© Historical Map'
-            }).addTo(map);
-            
-            // Добавляем старинный фильтр
-            const mapContainer = document.getElementById('map-container');
-            mapContainer.style.filter = 'sepia(50%) contrast(1.2)';
+        const ww2Info = {
+  'minsk': {
+    name: 'Минская область',
+    image: 'images/minsk.png',
+    content: `<p><strong>События:</strong> Минск оккупирован 28 июня 1941, освобождён 3 июля 1944 (операция «Багратион»).</p>
+              <p><strong>Партизаны:</strong> Действовали крупные отряды, разрушались дороги и штабы противника.</p>
+              <p><strong>Мемориалы:</strong> Тростенец – лагерь смерти; «Курган Славы» в честь освобождения Минска.</p>`
+},
+  'brest': {
+    name: 'Брестская область',
+    image: 'images/brest.png',
+    content: `<p><strong>События:</strong> Оборона Брестской крепости 22–29 июня 1941 года – один из первых героических эпизодов войны.</p>
+              <p><strong>Партизаны:</strong> Активные отряды действовали в Пружанском, Кобринском и Ивацевичском районах.</p>
+              <p><strong>Мемориалы:</strong> Брестская крепость – символ мужества и героизма защитников.</p>`
+  },
+  'gomel': {
+    name: 'Гомельская область',
+    image: 'images/gomel.png',
+    content: `<p><strong>События:</strong> Гомель оккупирован 19 августа 1941, освобождён 26 ноября 1943 в ходе Гомельско-Речицкой операции.</p>
+              <p><strong>Партизаны:</strong> Крупные соединения выводили из строя железные дороги и мосты, нападали на штабы противника.</p>
+              <p><strong>Мемориалы:</strong> Комплекс «Журавичи» – место массовых расстрелов мирного населения.</p>`
+  },
+  'grodno': {
+    name: 'Гродненская область',
+    image: 'images/grodno.png',
+    content: `<p><strong>События:</strong> Гродно оккупирован 23 июня 1941, освобождён 16 июля 1944.</p>
+              <p><strong>Партизаны:</strong> Более 200 отрядов активно действовали в лесах области.</p>
+              <p><strong>Мемориалы:</strong> «Лидская крепость», памятники в Щучине и Волковыске.</p>`
+  },
+  'mogilev': {
+    name: 'Могилёвская область',
+    image: 'images/mogilev.jpg',
+    content: `<p><strong>События:</strong> Бои за Могилёв летом 1941, освобождён 28 июня 1944 в ходе операции «Багратион».</p>
+              <p><strong>Партизаны:</strong> Активные действия велись в Кричевском, Чаусском и Белыничском районах.</p>
+              <p><strong>Мемориалы:</strong> Мемориал «Буйничское поле» под Могилёвом.</p>`
+  },
+  'vitebsk': {
+    name: 'Витебская область',
+    image: 'images/vitebsk.png',
+    content: `<p><strong>События:</strong> Оккупирована летом 1941, освобождена в июне 1944.</p>
+              <p><strong>Партизаны:</strong> Десятки бригад действовали в лесах области, включая «Железняк» и «За Родину».</p>
+              <p><strong>Мемориалы:</strong> Мемориал «Три штыка» в Витебске, места массовых захоронений мирного населения.</p>`
+  }
+};
+// Точное соответствие ID элементов SVG и регионов
+const regionMapping = {
+  'path3015': 'vitebsk',
+  'path3009': 'minsk',
+  'polygon3013': 'grodno',
+  'polygon3017': 'mogilev',
+  'polygon3011': 'brest',
+  'path3007': 'gomel'
+};
 
-            const locations = [
-                { coords: [52.09, 23.68], name: 'Брест', nameBY: 'Брэст', type: 'Оборона Брестской крепости', typeBY: 'Абарона Брэсцкай крэпасці', color: '#dc143c', timelineLink: 'timeline' },
-                { coords: [53.9, 27.56], name: 'Минск', nameBY: 'Мінск', type: 'Освобождение столицы', typeBY: 'Вызваленне сталіцы', color: '#ffd700', timelineLink: 'timeline' },
-                { coords: [55.19, 30.2], name: 'Витебск', nameBY: 'Віцебск', type: 'Партизанская база', typeBY: 'Партызанская база', color: '#228b22', timelineLink: 'timeline' },
-                { coords: [54.2, 28.5], name: 'Хатынь', nameBY: 'Хатынь', type: 'Трагедия Хатыни', typeBY: 'Трагедыя Хатыні', color: '#4169e1', timelineLink: 'timeline' },
-                { coords: [53.68, 23.83], name: 'Гродно', nameBY: 'Гродна', type: 'Освобождение города', typeBY: 'Вызваленне горада', color: '#ffd700', timelineLink: 'timeline' }
-            ];
+const SVG_URL = 'https://upload.wikimedia.org/wikipedia/commons/6/63/Belarus%2C_administrative_divisions_-_ru_-_colored.svg';
 
-            locations.forEach(loc => {
-                const marker = L.circleMarker(loc.coords, {
-                    radius: 14,
-                    fillColor: loc.color,
-                    color: '#fff',
-                    weight: 3,
-                    fillOpacity: 0.9
-                }).addTo(map);
+async function loadAndEmbedSVG(){
+    const container = document.getElementById('map-container');
+    try{
+        const res = await fetch(SVG_URL);
+        if(!res.ok) throw new Error('Ошибка загрузки SVG');
+        const svgText = await res.text();
+        container.innerHTML = svgText;
+        
+        setTimeout(makeRegionsInteractive, 100);
+    }catch(err){
+        console.error(err);
+        container.innerHTML = `<div class="default-message" style="padding:40px;text-align:center;color:#5a4634">Не удалось загрузить карту.</div>`;
+    }
+}
+
+function makeRegionsInteractive(){
+    const svgEl = document.querySelector('#map-container svg');
+    if(!svgEl){
+        console.error('SVG не найден');
+        return;
+    }
+    
+    // Перебираем точные ID из маппинга
+    Object.entries(regionMapping).forEach(([elementId, regionKey]) => {
+        const element = svgEl.querySelector(`#${elementId}`);
+        
+        if(!element){
+            console.warn(`Элемент ${elementId} не найден`);
+            return;
+        }
+        
+        console.log(`Настройка региона: ${regionKey} (${elementId})`);
+        
+        // Находим все кликабельные элементы
+        let clickableElements = [element];
+        
+        // Если это группа, добавляем все вложенные фигуры
+        if(element.tagName.toLowerCase() === 'g'){
+            const innerShapes = element.querySelectorAll('path, polygon, rect, circle');
+            clickableElements = [element, ...innerShapes];
+        }
+        
+        // Добавляем обработчики на все элементы
+        clickableElements.forEach(shape => {
+            shape.classList.add('region-interactive');
+            shape.setAttribute('data-region', regionKey);
+            
+            shape.addEventListener('click', function(e){
+                e.stopPropagation();
+                console.log(`Клик по региону: ${regionKey}`);
+                clearActiveRegions();
                 
-                const lang = currentLang === 'ru';
-                const popupContent = `
-                    <div style="text-align: center; padding: 12px; min-width: 200px;">
-                        <strong style="color: #8b4513; font-size: 18px; display: block; margin-bottom: 10px;">${lang ? loc.name : loc.nameBY}</strong>
-                        <span style="color: #666; font-size: 15px; display: block; margin-bottom: 12px;">${lang ? loc.type : loc.typeBY}</span>
-                        <button onclick="navigate('${loc.timelineLink}', event); map.closePopup();" style="background: #5a4634; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-family: inherit;">
-                            ${lang ? '📖 Подробнее в ленте' : '📖 Падрабязней у стужцы'}
-                        </button>
-                    </div>
-                `;
-                marker.bindPopup(popupContent);
+                // Подсвечиваем все элементы этого региона
+                clickableElements.forEach(s => s.classList.add('region-active'));
+                
+                showRegionInfo(regionKey);
             });
-
-            window.mapInitialized = true;
-        }
-
-        // Показать на карте
-        function showOnMap(lat, lng) {
-            navigate('map', {preventDefault: () => {}});
             
-            setTimeout(() => {
-                if (map) {
-                    map.setView([lat, lng], 10);
-                    L.popup()
-                        .setLatLng([lat, lng])
-                        .setContent('<div style="text-align: center; padding: 10px;"><b style="color: #8b4513; font-size: 16px;">' + (currentLang === 'ru' ? 'Место события' : 'Месца падзеі') + '</b></div>')
-                        .openOn(map);
+            shape.addEventListener('mouseenter', function(){
+                if(!this.classList.contains('region-active')){
+                    clickableElements.forEach(s => {
+                        if(!s.classList.contains('region-active')){
+                            s.style.filter = 'brightness(1.2)';
+                        }
+                    });
                 }
-            }, 500);
-        }
+            });
+            
+            shape.addEventListener('mouseleave', function(){
+                if(!this.classList.contains('region-active')){
+                    clickableElements.forEach(s => {
+                        if(!s.classList.contains('region-active')){
+                            s.style.filter = '';
+                        }
+                    });
+                }
+            });
+        });
+    });
+    
+    console.log('Все регионы настроены!');
+}
 
+function clearActiveRegions(){
+    const activeElements = document.querySelectorAll('.region-active');
+    activeElements.forEach(el => {
+        el.classList.remove('region-active');
+        el.style.filter = '';
+    });
+}
+
+function showRegionInfo(regionId){
+    const data = ww2Info[regionId];
+    if(!data){
+        console.error(`Данные для региона ${regionId} не найдены`);
+        return;
+    }
+    
+    const info = document.getElementById('info-box');
+    info.innerHTML = `<div class="title">${data.name}</div>
+                      <div class="image" style="background-image:url('${data.image}')"></div>
+                      <div class="content">${data.content}</div>`;
+}
+
+window.addEventListener('DOMContentLoaded', loadAndEmbedSVG);
+
+
+// Сброс активных регионов
+function clearActiveRegions(){
+    const activeElements = document.querySelectorAll('[data-region].active');
+    activeElements.forEach(el => {
+        el.classList.remove('active');
+        el.style.filter = '';
+    });
+}
+
+
+window.addEventListener('DOMContentLoaded', loadAndEmbedSVG);
         // ======= ВОСПРОИЗВЕДЕНИЕ =======
 function playVoice(file, index, title) {
     const player = document.getElementById('audioPlayer');
